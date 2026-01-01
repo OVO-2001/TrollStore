@@ -3,6 +3,7 @@
 #import "TSUtil.h"
 #import "TSApplicationsManager.h"
 #import "TSInstallationController.h"
+#import "TSGlassmorphism.h"
 #import <TSPresentationDelegate.h>
 
 @implementation TSSceneDelegate
@@ -30,7 +31,7 @@
 						exit(0);
 					}
 				};
-				
+
 				if ([url.pathExtension.lowercaseString isEqualToString:@"ipa"] || [url.pathExtension.lowercaseString isEqualToString:@"tipa"])
 				{
 					[TSInstallationController presentInstallationAlertIfEnabledForFile:url.path isRemoteInstall:NO completion:^(BOOL success, NSError* error){
@@ -149,7 +150,9 @@
 	// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
 	// If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
 	// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-	
+
+	[TSGlassmorphism applyGlobalAppearance];
+
 	UIWindowScene* windowScene = (UIWindowScene*)scene;
 	_window = [[UIWindow alloc] initWithWindowScene:windowScene];
 	_rootViewController = [[TSRootViewController alloc] init];
@@ -197,11 +200,6 @@
 	// Called as the scene transitions from the foreground to the background.
 	// Use this method to save data, release shared resources, and store enough scene-specific state information
 	// to restore the scene back to its current state.
-}
-
-- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts
-{
-	[self handleURLContexts:URLContexts scene:(UIWindowScene*)scene];
 }
 
 @end

@@ -1,8 +1,26 @@
 #import "TSDonateListController.h"
 #import <Preferences/PSSpecifier.h>
+#import "TSGlassmorphism.h"
 
 @implementation TSDonateListController
 
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+
+	[TSGlassmorphism applyToView:self.view];
+	if(self.table)
+	{
+		[TSGlassmorphism applyToTableView:self.table];
+	}
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	cell.backgroundColor = [UIColor clearColor];
+	cell.contentView.backgroundColor = [UIColor clearColor];
+	cell.backgroundView = nil;
+}
 
 - (void)donateToAlfiePressed
 {
@@ -19,7 +37,7 @@
 	if(!_specifiers)
 	{
 		_specifiers = [NSMutableArray new];
-		
+
 		PSSpecifier* alfieGroupSpecifier = [PSSpecifier emptyGroupSpecifier];
 		alfieGroupSpecifier.name = @"Alfie";
 		[alfieGroupSpecifier setProperty:@"Alfie found the new CoreTrust bug (CVE-2023-41991) via patchdiffing, produced a POC binary and worked on automatically applying it with the help of the ChOma library, while also contributing to said library." forKey:@"footerText"];

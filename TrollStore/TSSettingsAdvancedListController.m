@@ -1,6 +1,7 @@
 #import "TSSettingsAdvancedListController.h"
 #import "TSUtil.h"
 #import <Preferences/PSSpecifier.h>
+#import "TSGlassmorphism.h"
 
 extern NSUserDefaults* trollStoreUserDefaults();
 @interface PSSpecifier ()
@@ -8,6 +9,24 @@ extern NSUserDefaults* trollStoreUserDefaults();
 @end
 
 @implementation TSSettingsAdvancedListController
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+
+	[TSGlassmorphism applyToView:self.view];
+	if(self.table)
+	{
+		[TSGlassmorphism applyToTableView:self.table];
+	}
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	cell.backgroundColor = [UIColor clearColor];
+	cell.contentView.backgroundColor = [UIColor clearColor];
+	cell.backgroundView = nil;
+}
 
 - (NSMutableArray*)specifiers
 {

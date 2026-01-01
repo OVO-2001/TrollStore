@@ -4,6 +4,7 @@
 #import <TSPresentationDelegate.h>
 #import "TSInstallationController.h"
 #import "TSUtil.h"
+#import "TSGlassmorphism.h"
 @import UniformTypeIdentifiers;
 
 #define ICON_FORMAT_IPAD 8
@@ -107,7 +108,10 @@ UIImage* imageWithSize(UIImage* image, CGSize size)
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
+	[TSGlassmorphism applyToView:self.view];
+	[TSGlassmorphism applyToTableView:self.tableView];
+
 	self.tableView.allowsMultipleSelectionDuringEditing = NO;
 	self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
@@ -161,7 +165,7 @@ UIImage* imageWithSize(UIImage* image, CGSize size)
 	UIMenu* installMenu = [UIMenu menuWithChildren:@[installFromFileAction, installFromURLAction]];
 
 	UIBarButtonItem* installBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"plus"] menu:installMenu];
-	
+
 	self.navigationItem.rightBarButtonItems = @[installBarButtonItem];
 }
 
@@ -377,6 +381,9 @@ UIImage* imageWithSize(UIImage* image, CGSize size)
 	cell.imageView.layer.cornerRadius = 13.5;
 	cell.imageView.layer.masksToBounds = YES;
 	cell.imageView.layer.cornerCurve = kCACornerCurveContinuous;
+	cell.backgroundColor = [UIColor clearColor];
+	cell.contentView.backgroundColor = [UIColor clearColor];
+	cell.backgroundView = nil;
 
 	if(appId)
 	{
