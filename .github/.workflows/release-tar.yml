@@ -1,0 +1,32 @@
+name: Release .taz (full repo)
+
+on:
+  push:
+    tags:
+      - "*"   # 推送任意 tag 触发，如 1.0 / 2.1 / v3.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create .taz (full repository)
+        run: |
+          set -eux
+          PROJECT_NAME="my-fork"              # 改成你的项目名
+          VERSION="${GITHUB_REF_NAME}"
+
+          mkdir -p out
+          # .taz 通常可视为 .tar.gz，这里用 gzip 压缩但输出扩展名为 .taz
+          tar --exclude=.git --exclude=.github \
+              -czf "out/${PROJECT_NAME}-${VERSION}.taz" .
+
+      - name: Create GitHub Release and upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.taz
