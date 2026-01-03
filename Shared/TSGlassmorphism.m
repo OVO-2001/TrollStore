@@ -53,7 +53,7 @@ static NSInteger const TSGlassBackgroundTag = 923514;
 		tabBar.scrollEdgeAppearance = tabAppearance;
 	}
 }
-a
+
 + (void)applyToView:(UIView *)view
 {
 	if([view viewWithTag:TSGlassBackgroundTag])
